@@ -37,7 +37,7 @@ componentWillMount() {
   }
 
 componentWillMount() {
-  axios.post('http://localhost:3000/dashboardInfo',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+  axios.post('https://lottery-app-omotomiwa.herokuapp.com/dashboardInfo',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
       if (res.data.message === "fetched successfully") {
         this.setState({
@@ -57,7 +57,7 @@ componentWillMount() {
 
     });
 
-  axios.post('http://localhost:3000/viewNotification',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+  axios.post('https://lottery-app-omotomiwa.herokuapp.com/viewNotification',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
       if (res.data.message === "fetched successfully") {
         this.setState({
@@ -76,7 +76,7 @@ componentWillMount() {
 
 onsubmit(e){
   e.preventDefault();
-  axios.post('http://localhost:3000/buyTicket',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+  axios.post('https://lottery-app-omotomiwa.herokuapp.com/buyTicket',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
       if (res.data.data.message === "ticket bought we hope you win ") {
         this.setState({
@@ -86,7 +86,7 @@ onsubmit(e){
         window.location.reload(false);
       }else {
         this.setState({
-          display: res.data.data.message
+          display: res.data.message
         })
       }
 
