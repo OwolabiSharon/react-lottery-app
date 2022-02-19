@@ -26,7 +26,7 @@ export default class Topup extends React.Component {
       amount: this.state.amount,
     }
 
-    axios.post('http://localhost:3000/topUp', data, { headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+    axios.post('https://lottery-app-omotomiwa.herokuapp.com/topUp', data, { headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
 
       if (res.data.data.message === "top up successful") {
