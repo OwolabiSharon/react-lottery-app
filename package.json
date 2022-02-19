@@ -6,8 +6,12 @@
   "license": "MIT",
   "scripts": {
     "serve": "live-server public/",
-    "build": "webpack --watch",
-    "dev-server": "webpack-dev-server"
+    "build:dev": "webpack",
+    "build:prod": "webpack -p --env production",
+    "dev-server": "webpack-dev-server",
+    "test": "jest --config=jest.config.json",
+    "start": "node server/server.js",
+    "heroku-postbuild": "npm run build:prod"
   },
   "dependencies": {
     "axios": "^0.24.0",
@@ -19,12 +23,14 @@
     "babel-preset-env": "1.5.2",
     "babel-preset-react": "6.24.1",
     "css-loader": "0.28.4",
+    "express": "^4.17.3",
     "live-server": "^1.2.0",
     "normalize.css": "^8.0.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-modal": "2.2.2",
     "react-router-dom": "4.2.2",
+    "react-scripts": "^5.0.0",
     "redux": "3.7.2",
     "style-loader": "0.18.2",
     "validator": "8.0.0",
