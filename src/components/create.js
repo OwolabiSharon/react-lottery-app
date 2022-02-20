@@ -56,16 +56,19 @@ export default class CreateAccount extends React.Component {
       .then(res =>{
         if (res.data.message === "Account created.") {
           window.location = '/login'
-        }else {
+        }else if (res.data.message === "Email already taken") {
           this.setState({
             display: res.data.message
           })
         }
 
       })
-      this.setState({
-        display: "bad request"
-      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          display: "bad request"
+        }) //Logs a string: Error: Request failed with status code 404
+      });
 
 
   }
