@@ -78,22 +78,26 @@ onsubmit(e){
   e.preventDefault();
   axios.post('https://lottery-app-omotomiwa.herokuapp.com/buyTicket',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
-      if (res.data.data.message === "ticket bought we hope you win ") {
+      console.log(res);
+      if (res.data.message === "you are too broke for this get a job or kill yourself ") {
+        this.setState({
+          display: res.data.message
+        })
+      }
+      else if (res.data.data.message === "ticket bought we hope you win ") {
         this.setState({
           display: res.data.data.message
         })
 
         window.location.reload(false);
-      }else {
-        this.setState({
-          display: res.data.message
-        })
       }
-
     })
-    this.setState({
-      display: "error occured"
-    })
+    .catch((error) => {
+      console.log(error);
+      this.setState({
+        display: "bad request"
+      }) //Logs a string: Error: Request failed with status code 404
+    });
 }
 
 
