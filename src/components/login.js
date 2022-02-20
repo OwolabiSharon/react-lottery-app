@@ -47,9 +47,12 @@ export default class AddOption extends React.Component {
         }
 
       })
-      this.setState({
-        display: "bad request"
-      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          display: "bad request"
+        }) //Logs a string: Error: Request failed with status code 404
+      });
 
     //window.location = '/dashboard'
   }
