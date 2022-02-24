@@ -1,6 +1,4 @@
 import React, {useEffect,useRef,useState} from 'react';
-import useCountdown from './timerSet';
-import jwtToken from './login';
 import {NavLink} from 'react-router-dom';
 import { VictoryPie } from "victory-pie";
 import axios from 'axios';
@@ -11,6 +9,8 @@ export default class Dashboard extends React.Component {
     super(props)
 
     this.onsubmit = this.onsubmit.bind(this)
+    this.hideMenu = this.hideMenu.bind(this)
+    this.showMenu = this.showMenu.bind(this)
 
 
 
@@ -36,8 +36,21 @@ componentWillMount() {
         );
   }
 
+  hideMenu(){
+    var navlinks = document.getElementById("NavLinks")
+
+    navlinks.style.right= "-200px"
+
+  }
+  showMenu(){
+    var navlinks = document.getElementById("NavLinks")
+
+    navlinks.style.right= "0px"
+
+  }
+
 componentWillMount() {
-  axios.post('https://lottery-app-omotomiwa.herokuapp.com/dashboardInfo',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+  axios.post('http://localhost:3000/dashboardInfo',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
       if (res.data.message === "fetched successfully") {
         this.setState({
@@ -57,7 +70,7 @@ componentWillMount() {
 
     });
 
-  axios.post('https://lottery-app-omotomiwa.herokuapp.com/viewNotification',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+  axios.post('http://localhost:3000/viewNotification',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
       if (res.data.message === "fetched successfully") {
         this.setState({
@@ -76,7 +89,7 @@ componentWillMount() {
 
 onsubmit(e){
   e.preventDefault();
-  axios.post('https://lottery-app-omotomiwa.herokuapp.com/buyTicket',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+  axios.post('http://localhost:3000/buyTicket',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
       console.log(res);
       if (res.data.message === "you are too broke for this get a job or kill yourself ") {
@@ -106,17 +119,20 @@ render() {
     <body>
     <div className = "navbar2">
       <h3 className = "header_h1"> lottery </h3>
-         <ul className = "header_list">
+
+         <ul className = "header_list2" id="NavLinks">
+         <i className="fa fa-times" onClick={this.hideMenu}></i>
             <li className = "header_listitem2">
               <NavLink to="/" activeClassName="is-active" exact={true} className = "header_listitem2">home page</NavLink>
             </li>
             <li className = "header_listitem2">
-              <NavLink to="/create" activeClassName="is-active"className = "header_listitem2">  create account</NavLink>
+              <NavLink to="/create" activeClassName="is-active"className = "header_listitem2">  create</NavLink>
             </li>
             <li className = "header_listitem2">
               <NavLink to="/terms" activeClassName="is-active" className = "header_listitem2">terms</NavLink>
             </li>
          </ul>
+         <i className="fa fa-bars" onClick={this.showMenu} id="fa-bars"></i>
     </div>
     <h1>Dashboard</h1>
     <h4>the money you have here is borrowed right?? great</h4>
@@ -142,7 +158,7 @@ render() {
       <div className="signup-box">
           <h1>ticket booth</h1>
           <h4>70% of lottery winners go bankrupt after 3 years</h4>
-            <form onSubmit={this.onsubmit} className="add-option">
+            <form onSubmit={this.onsubmit}>
               <button className="buttonbuy">buy ticket</button>
               <h4>{this.state.display}</h4>
 
@@ -161,3 +177,4 @@ render() {
   );
 }
 }
+
