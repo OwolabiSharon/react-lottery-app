@@ -66,7 +66,7 @@ export default class CreateAccount extends React.Component {
       phoneNumber:this.state.phoneNumber,
     }
 
-    axios.post('http://localhost:3000/', userData)
+    axios.post('https://lottery-app-omotomiwa.herokuapp.com/', userData)
       .then(res =>{
         if (res.data.message === "Account created.") {
           window.location = '/login'
