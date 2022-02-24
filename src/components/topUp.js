@@ -8,6 +8,8 @@ export default class Topup extends React.Component {
 
     this.onsubmit = this.onsubmit .bind(this)
     this.onChangeAmount = this.onChangeAmount.bind(this)
+    this.hideMenu = this.hideMenu.bind(this)
+    this.showMenu = this.showMenu.bind(this)
 
     this.state = {
       amount: '',
@@ -19,6 +21,18 @@ export default class Topup extends React.Component {
       amount: e.target.value
     })
   }
+  hideMenu(){
+    var navlinks = document.getElementById("NavLinks")
+
+    navlinks.style.right= "-200px"
+
+  }
+  showMenu(){
+    var navlinks = document.getElementById("NavLinks")
+
+    navlinks.style.right= "0px"
+
+  }
 
   onsubmit(e){
     e.preventDefault();
@@ -26,7 +40,7 @@ export default class Topup extends React.Component {
       amount: this.state.amount,
     }
 
-    axios.post('https://lottery-app-omotomiwa.herokuapp.com/topUp', data, { headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+    axios.post('http://localhost:3000/topUp', data, { headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
 
       if (res.data.data.message === "top up successful") {
@@ -44,25 +58,27 @@ export default class Topup extends React.Component {
       }) //Logs a string: Error: Request failed with status code 404
     });
 
-    //window.location = '/dashboard'
   }
   render() {
     return (
       <body>
-        <div className = "navbar2">
-          <h3 className = "header_h1"> lottery </h3>
-             <ul className = "header_list">
-                <li className = "header_listitem2">
-                  <NavLink to="/" activeClassName="is-active" exact={true} className = "header_listitem2">home page</NavLink>
-                </li>
-                <li className = "header_listitem2">
-                  <NavLink to="/create" activeClassName="is-active"className = "header_listitem2">  create account</NavLink>
-                </li>
-                <li className = "header_listitem2">
-                  <NavLink to="/terms" activeClassName="is-active" className = "header_listitem2">terms</NavLink>
-                </li>
-             </ul>
-        </div>
+      <div className = "navbar2">
+        <h3 className = "header_h1"> lottery </h3>
+
+           <ul className = "header_list2" id="NavLinks">
+           <i className="fa fa-times" onClick={this.hideMenu}></i>
+              <li className = "header_listitem">
+                <NavLink to="/" activeClassName="is-active" exact={true} className = "header_listitem2">home page</NavLink>
+              </li>
+              <li className = "header_listitem2">
+                <NavLink to="/create" activeClassName="is-active"className = "header_listitem2">  create</NavLink>
+              </li>
+              <li className = "header_listitem2">
+                <NavLink to="/terms" activeClassName="is-active" className = "header_listitem2">terms</NavLink>
+              </li>
+           </ul>
+           <i className="fa fa-bars" onClick={this.showMenu} id="fa-bars"></i>
+      </div>
         <div className="signup-box">
 
           <h1>topUp lottery account</h1>
