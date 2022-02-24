@@ -50,7 +50,7 @@ componentWillMount() {
   }
 
 componentWillMount() {
-  axios.post('http://localhost:3000/dashboardInfo',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+  axios.post('https://lottery-app-omotomiwa.herokuapp.com/dashboardInfo',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
       if (res.data.message === "fetched successfully") {
         this.setState({
@@ -70,7 +70,7 @@ componentWillMount() {
 
     });
 
-  axios.post('http://localhost:3000/viewNotification',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+  axios.post('https://lottery-app-omotomiwa.herokuapp.com/viewNotification',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
       if (res.data.message === "fetched successfully") {
         this.setState({
@@ -89,7 +89,7 @@ componentWillMount() {
 
 onsubmit(e){
   e.preventDefault();
-  axios.post('http://localhost:3000/buyTicket',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
+  axios.post('https://lottery-app-omotomiwa.herokuapp.com/buyTicket',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
       console.log(res);
       if (res.data.message === "you are too broke for this get a job or kill yourself ") {
