@@ -11,6 +11,8 @@ export default class CreateAccount extends React.Component {
     this.onChangePassword = this.onChangePassword.bind(this)
     this.onChangePhoneNumber = this.onChangePhoneNumber.bind(this)
     this.onsubmit = this.onsubmit .bind(this)
+    this.hideMenu = this.hideMenu.bind(this)
+    this.showMenu = this.showMenu.bind(this)
 
     this.state = {
       accountName: '',
@@ -42,6 +44,19 @@ export default class CreateAccount extends React.Component {
       phoneNumber: e.target.value
     })
   }
+
+  hideMenu(){
+    var navlinks = document.getElementById("NavLinks")
+
+    navlinks.style.right= "-200px"
+
+  }
+  showMenu(){
+    var navlinks = document.getElementById("NavLinks")
+
+    navlinks.style.right= "0px"
+
+  }
   onsubmit(e){
     e.preventDefault();
     const userData = {
@@ -50,9 +65,8 @@ export default class CreateAccount extends React.Component {
       password:this.state.password,
       phoneNumber:this.state.phoneNumber,
     }
-    console.log(userData);
 
-    axios.post('https://lottery-app-omotomiwa.herokuapp.com/', userData)
+    axios.post('http://localhost:3000/', userData)
       .then(res =>{
         if (res.data.message === "Account created.") {
           window.location = '/login'
@@ -71,6 +85,7 @@ export default class CreateAccount extends React.Component {
       });
 
 
+
   }
   render() {
     return (
@@ -78,17 +93,20 @@ export default class CreateAccount extends React.Component {
       <div className="cover_div">
       <div className = "navbar2">
         <h3 className = "header_h1"> lottery </h3>
-           <ul className = "header_list">
+
+           <ul className = "header_list2" id="NavLinks">
+           <i className="fa fa-times" onClick={this.hideMenu}></i>
               <li className = "header_listitem2">
                 <NavLink to="/" activeClassName="is-active" exact={true} className = "header_listitem2">home page</NavLink>
               </li>
               <li className = "header_listitem2">
-                <NavLink to="/create" activeClassName="is-active"className = "header_listitem2">  create account</NavLink>
+                <NavLink to="/create" activeClassName="is-active"className = "header_listitem2">  create</NavLink>
               </li>
               <li className = "header_listitem2">
                 <NavLink to="/terms" activeClassName="is-active" className = "header_listitem2">terms</NavLink>
               </li>
            </ul>
+           <i className="fa fa-bars" onClick={this.showMenu} id="fa-bars"></i>
       </div>
         <div className="signup-box">
             <h1>sign up</h1>
