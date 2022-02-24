@@ -49,7 +49,7 @@ export default class Login extends React.Component {
       email: this.state.email,
       password:this.state.password,
     }
-    axios.post('http://localhost:3000/login', userData)
+    axios.post('https://lottery-app-omotomiwa.herokuapp.com/login', userData)
       .then(res =>{
         if (res.data.message === "Login successful") {
 
