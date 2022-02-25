@@ -15,15 +15,15 @@ export default class NotFoundPage extends React.Component {
   hideMenu(){
     var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.right= "-200px"
-    navlinks.style.display= "none"
+    navlinks.style.opacity= "0"
+    navlinks.style.pointerEvents= "none"
 
   }
   showMenu(){
     var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.display= "unset"
-    navlinks.style.right= "0px"
+    navlinks.style.opacity= "1"
+    navlinks.style.pointerEvents= "all"
 
   }
 
