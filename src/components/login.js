@@ -2,7 +2,7 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import axios from 'axios';
 
-export default class Login extends React.Component {
+export default class AddOption extends React.Component {
   constructor(props){
     super(props)
 
@@ -15,7 +15,8 @@ export default class Login extends React.Component {
     this.state = {
       email: '',
       password:'',
-      display:''
+      display:'',
+      loading: false
     };
 }
 
@@ -33,15 +34,15 @@ export default class Login extends React.Component {
   hideMenu(){
     var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.right= "-200px"
-    navlinks.style.display= "none"
+    navlinks.style.opacity= "0"
+    navlinks.style.pointerEvents= "none"
 
   }
   showMenu(){
     var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.display= "unset"
-    navlinks.style.right= "0px"
+    navlinks.style.opacity= "1"
+    navlinks.style.pointerEvents= "all"
 
   }
 
@@ -51,8 +52,10 @@ export default class Login extends React.Component {
       email: this.state.email,
       password:this.state.password,
     }
+    this.setState({ loading: true })
     axios.post('https://lottery-app-omotomiwa.herokuapp.com/login', userData)
       .then(res =>{
+        this.setState({ loading: false })
         if (res.data.message === "Login successful") {
 
           window.location = '/dashboard'
@@ -65,6 +68,7 @@ export default class Login extends React.Component {
 
       })
       .catch((error) => {
+        this.setState({ loading: false })
         console.log(error);
         this.setState({
           display: "bad request"
@@ -108,7 +112,7 @@ export default class Login extends React.Component {
           />
           <label>password</label>
           <input
-            type="text"
+            type="password"
              name="option"
              className="add-option-input"
              placeholder="password"
@@ -117,8 +121,11 @@ export default class Login extends React.Component {
 
           <button className="button">login</button>
 
-          <p> get a lone from the bank and put it here, you will win dont worry<NavLink to="/terms">terms and conditions</NavLink> </p>
+          <p> get a loan from the bank and put it here, you will win dont worry<NavLink to="/terms">terms and conditions</NavLink> </p>
         </form>
+        <div className="loader">
+        {this.state.loading === true && <i class="fa fa-spinner fa-spin" ></i>}
+        </div>
         <h4>{this.state.display}</h4>
       </div>
       <p className="loginP">don't have an account??<NavLink to="/create">create one here</NavLink></p>
@@ -126,4 +133,3 @@ export default class Login extends React.Component {
     );
   }
 }
-
