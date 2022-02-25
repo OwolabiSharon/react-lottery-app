@@ -1,4 +1,6 @@
 import React, {useEffect,useRef,useState} from 'react';
+import useCountdown from './timerSet';
+import jwtToken from './login';
 import {NavLink} from 'react-router-dom';
 import { VictoryPie } from "victory-pie";
 import axios from 'axios';
@@ -25,7 +27,8 @@ export default class Dashboard extends React.Component {
       ],
       notification_title:"",
       notification_body:"",
-      notificationNumber:""
+      notificationNumber:"",
+      loading: false
     };
 }
 
@@ -39,15 +42,15 @@ componentWillMount() {
   hideMenu(){
     var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.right= "-200px"
-    navlinks.style.display= "none"
+    navlinks.style.opacity= "0"
+    navlinks.style.pointerEvents= "none"
 
   }
   showMenu(){
     var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.display= "unset"
-    navlinks.style.right= "0px"
+    navlinks.style.opacity= "1"
+    navlinks.style.pointerEvents= "all"
 
   }
 
@@ -91,8 +94,10 @@ componentWillMount() {
 
 onsubmit(e){
   e.preventDefault();
+  this.setState({ loading: true })
   axios.post('https://lottery-app-omotomiwa.herokuapp.com/buyTicket',{},{ headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
+      this.setState({ loading: false })
       console.log(res);
       if (res.data.message === "you are too broke for this get a job or kill yourself ") {
         this.setState({
@@ -108,6 +113,7 @@ onsubmit(e){
       }
     })
     .catch((error) => {
+      this.setState({ loading: false })
       console.log(error);
       this.setState({
         display: "bad request"
@@ -162,6 +168,9 @@ render() {
           <h4>70% of lottery winners go bankrupt after 3 years</h4>
             <form onSubmit={this.onsubmit}>
               <button className="buttonbuy">buy ticket</button>
+              <div className="loader">
+              {this.state.loading === true && <i class="fa fa-spinner fa-spin" ></i>}
+              </div>
               <h4>{this.state.display}</h4>
 
             </form>
@@ -179,4 +188,3 @@ render() {
   );
 }
 }
-
