@@ -49,11 +49,13 @@ export default class CreateAccount extends React.Component {
     var navlinks = document.getElementById("NavLinks")
 
     navlinks.style.right= "-200px"
+    navlinks.style.display= "none"
 
   }
   showMenu(){
     var navlinks = document.getElementById("NavLinks")
 
+    navlinks.style.display= "unset"
     navlinks.style.right= "0px"
 
   }
@@ -83,7 +85,6 @@ export default class CreateAccount extends React.Component {
           display: "bad request"
         }) //Logs a string: Error: Request failed with status code 404
       });
-
 
 
   }
@@ -134,7 +135,7 @@ export default class CreateAccount extends React.Component {
                   type="text"
                    name="option"
                    className="add-option-input"
-                   placeholder="password"
+                   placeholder="password(most contain letter and number)"
                    onChange={this.onChangePassword}
                 />
                 <label>phone number</label>
