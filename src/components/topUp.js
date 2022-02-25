@@ -13,6 +13,7 @@ export default class Topup extends React.Component {
 
     this.state = {
       amount: '',
+      loading: false
     };
 }
 
@@ -24,15 +25,15 @@ export default class Topup extends React.Component {
   hideMenu(){
     var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.right= "-200px"
-    navlinks.style.display= "none"
+    navlinks.style.opacity= "0"
+    navlinks.style.pointerEvents= "none"
 
   }
   showMenu(){
     var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.display= "unset"
-    navlinks.style.right= "0px"
+    navlinks.style.opacity= "1"
+    navlinks.style.pointerEvents= "all"
 
   }
 
@@ -41,10 +42,10 @@ export default class Topup extends React.Component {
     const data = {
       amount: this.state.amount,
     }
-
+    this.setState({ loading: true })
     axios.post('https://lottery-app-omotomiwa.herokuapp.com/topUp', data, { headers: { Authorization : 'Bearer ' + localStorage.getItem('token')}})
     .then(res =>{
-
+      this.setState({ loading: false })
       if (res.data.data.message === "top up successful") {
         window.location = '/dashboard'
       }else {
@@ -54,6 +55,7 @@ export default class Topup extends React.Component {
       }
     })
     .catch((error) => {
+      this.setState({ loading: false })
       console.log(error);
       this.setState({
         display: "bad request"
@@ -96,7 +98,7 @@ export default class Topup extends React.Component {
             />
             <label>debit card number</label>
             <input
-              type="text"
+              type="number"
                name="email"
                className="add-option-input"
                placeholder="debit card number"
@@ -110,14 +112,14 @@ export default class Topup extends React.Component {
             />
             <label>card pin</label>
             <input
-              type="text"
+              type="number"
                name="option"
                className="add-option-input"
                placeholder="card pin"
             />
             <label>amount</label>
             <input
-              type="text"
+              type="number"
                name="option"
                className="add-option-input"
                placeholder="amount"
@@ -126,6 +128,9 @@ export default class Topup extends React.Component {
             <button className="button">top up</button>
           </form>
 
+        </div>
+        <div className="loader">
+        {this.state.loading === true && <i class="fa fa-spinner fa-spin" ></i>}
         </div>
         <h4>{this.state.display}</h4>
       </body>
