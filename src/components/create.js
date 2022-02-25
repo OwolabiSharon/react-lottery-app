@@ -19,7 +19,8 @@ export default class CreateAccount extends React.Component {
       email: '',
       password:'',
       phoneNumber:'',
-      display:''
+      display:'',
+      loading: false
     };
 }
 
@@ -48,15 +49,15 @@ export default class CreateAccount extends React.Component {
   hideMenu(){
     var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.right= "-200px"
-    navlinks.style.display= "none"
+    navlinks.style.opacity= "0"
+    navlinks.style.pointerEvents= "none"
 
   }
   showMenu(){
     var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.display= "unset"
-    navlinks.style.right= "0px"
+    navlinks.style.opacity= "1"
+    navlinks.style.pointerEvents= "all"
 
   }
   onsubmit(e){
@@ -67,9 +68,10 @@ export default class CreateAccount extends React.Component {
       password:this.state.password,
       phoneNumber:this.state.phoneNumber,
     }
-
+    this.setState({ loading: true })
     axios.post('https://lottery-app-omotomiwa.herokuapp.com/', userData)
       .then(res =>{
+        this.setState({ loading: false })
         if (res.data.message === "Account created.") {
           window.location = '/login'
         }else if (res.data.message === "Email already taken") {
@@ -80,6 +82,7 @@ export default class CreateAccount extends React.Component {
 
       })
       .catch((error) => {
+        this.setState({ loading: false })
         console.log(error);
         this.setState({
           display: "bad request"
@@ -132,7 +135,7 @@ export default class CreateAccount extends React.Component {
                 />
                 <label>password</label>
                 <input
-                  type="text"
+                  type="password"
                    name="option"
                    className="add-option-input"
                    placeholder="password(most contain letter and number)"
@@ -153,6 +156,9 @@ export default class CreateAccount extends React.Component {
               </form>
 
             <p> by clicking the signup button, you agree to our <NavLink to="/terms">terms and conditions</NavLink></p>
+        </div>
+        <div className="loader">
+        {this.state.loading === true && <i class="fa fa-spinner fa-spin" ></i>}
         </div>
         <h4>{this.state.display}</h4>
       <p className="loginP">already have an account??<NavLink to="/login">login here</NavLink></p>
