@@ -1,5 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
+import Header from './Header';
 
 
 export default class Home extends React.Component {
@@ -12,20 +13,20 @@ export default class Home extends React.Component {
 
 }
 
-  hideMenu(){
-    var navlinks = document.getElementById("NavLinks")
+    hideMenu(){
+      var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.right= "-200px"
-    navlinks.style.display= "none"
+      navlinks.style.opacity= "0"
+      navlinks.style.pointerEvents= "none"
 
-  }
-  showMenu(){
-    var navlinks = document.getElementById("NavLinks")
+    }
+    showMenu(){
+      var navlinks = document.getElementById("NavLinks")
 
-    navlinks.style.display= "unset"
-    navlinks.style.right= "0px"
+      navlinks.style.opacity= "1"
+      navlinks.style.pointerEvents= "all"
 
-  }
+    }
 
 
   render() {
@@ -63,4 +64,3 @@ export default class Home extends React.Component {
     );
   }
 }
-
