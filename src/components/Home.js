@@ -12,18 +12,20 @@ export default class Home extends React.Component {
 
 }
 
-    hideMenu(){
-      var navlinks = document.getElementById("NavLinks")
+  hideMenu(){
+    var navlinks = document.getElementById("NavLinks")
 
-      navlinks.style.right= "-200px"
+    navlinks.style.right= "-200px"
+    navlinks.style.display= "none"
 
-    }
-    showMenu(){
-      var navlinks = document.getElementById("NavLinks")
+  }
+  showMenu(){
+    var navlinks = document.getElementById("NavLinks")
 
-      navlinks.style.right= "0px"
+    navlinks.style.display= "unset"
+    navlinks.style.right= "0px"
 
-    }
+  }
 
 
   render() {
