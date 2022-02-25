@@ -34,11 +34,13 @@ export default class Login extends React.Component {
     var navlinks = document.getElementById("NavLinks")
 
     navlinks.style.right= "-200px"
+    navlinks.style.display= "none"
 
   }
   showMenu(){
     var navlinks = document.getElementById("NavLinks")
 
+    navlinks.style.display= "unset"
     navlinks.style.right= "0px"
 
   }
